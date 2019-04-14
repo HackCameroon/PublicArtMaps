@@ -1,5 +1,5 @@
 # artsee
-Making public art more public by leveraging GCP & municipal open data sets
+Making public art more public by leveraging GCP & municipal open data sets. Developed during HackSC -- [devpost](https://devpost.com/software/artsee)
 
 ## Inspiration
 Public art is abundant all around the country's cities. Finding these locations can be tricky, though: there is no way to browse these points on a map despite publically available datasets that include them. artsee does this on top of using street view to allow users to virtually visit these public art installations without the plane ticket.
