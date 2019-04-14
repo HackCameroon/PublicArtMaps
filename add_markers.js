@@ -107,5 +107,102 @@ $.get("https://data.austintexas.gov/resource/x98i-tia5.json", (data) => {
             marker.addListener('click', () => infowindow.open(map, marker))
         }
     })
+});
+
+// Norfolk VA
+$.get("https://data.norfolk.gov/resource/k8ry-iqjg.json", (data) => {
+    console.log(data)
+    data.forEach(e => {
+        let title_str = (e.artwork_name === undefined ? "" : ('<h1 id="firstHeading" class="firstHeading">' + e.artwork_name + '</h1>'));
+        let artist_str = (e.artist === undefined ? "" : ('<p><b> Artist: </b>' + e.artist + '</p>'));
+        let type_str = (e.category === undefined ? "" : ('<p><b> Type: </b>' + e.category + '</p>'));
+        let material_str = (e.media === undefined ? "" : ('<p><b> Material: </b>' + e.media + '</p>'));
+        var contentString = '<div id="content">' +
+            '<div id="siteNotice">' +
+            '</div>' +
+            title_str +
+            '<div id="bodyContent">' +
+            artist_str +
+            type_str +
+            material_str +
+            '</div>' +
+            '</div>';
+
+        var infowindow = new google.maps.InfoWindow({
+            content: contentString
+        });
+
+        if (e.geocoded_column !== undefined) {
+            var latLng = new google.maps.LatLng(e.geocoded_column.coordinates[1], e.geocoded_column.coordinates[0])
+            var marker = new google.maps.Marker({
+                position: latLng,
+                map: map,
+            })
+            marker.addListener('click', () => infowindow.open(map, marker))
+        }
+    })
+});
+
+// LA
+$.get("https://data.lacounty.gov/resource/5hc5-td4w.json", (data) => {
+    console.log(data)
+    data.forEach(e => {
+        let address = e.location_street_address;
+        let city = e.location_street_city;
+        let title_str = (e.title === undefined ? "" : ('<h1 id="firstHeading" class="firstHeading">' + e.title + '</h1>'));
+        let artist_str = (e.artist_name === undefined ? "" : ('<p><b> Artist: </b>' + e.artist_name + '</p>'));
+        let type_str = (e.object_type === undefined ? "" : ('<p><b> Type: </b>' + e.object_type + '</p>'));
+        let material_str = (e.media_support === undefined ? "" : ('<p><b> Material: </b>' + e.media_support + '</p>'));
+        let desc_str = (e.artwork_description === undefined ? "" : ('<p>' + e.artwork_description + '</p>'));
+        var contentString = '<div id="content">' +
+            '<div id="siteNotice">' +
+            '</div>' +
+            title_str +
+            '<div id="bodyContent">' +
+            desc_str +
+            artist_str +
+            type_str +
+            material_str +
+            '</div>' +
+            '</div>';
+        var infowindow = new google.maps.InfoWindow({
+            content: contentString
+        });
+        $.get(`https://maps.googleapis.com/maps/api/geocode/json?address=${address}+${city},CA&key=AIzaSyDas_wKrazAnJ0-vIaOrxrIJvSRsWdYBro`, (l) => {
+            var marker = new google.maps.Marker({
+                position: l.results[0].geometry.location,
+                map: map,
+            })
+            marker.addListener('click', () => infowindow.open(map, marker))
+        })
+    })
 })
 
+$.get("https://www.nycgovparks.org/bigapps/DPR_PublicArt_001.json", (data) => {
+    data = JSON.parse(data);
+    data.forEach(e => {
+        let title_str = (e.name === undefined ? "" : ('<h1 id="firstHeading" class="firstHeading">' + e.name + '</h1>'));
+        let desc = (e.description === undefined ? "" : '<div> ' + e.description + '</div>');
+        let artist_str = (e.artist === undefined ? "" : ('<p><b> Artist: </b>' + e.artist + '</p>'));
+        var contentString = '<div id="content">' +
+            '<div id="siteNotice">' +
+            '</div>' +
+            title_str +
+            '<div id="bodyContent">' +
+            desc +
+            artist_str +
+            '</div>' +
+            '</div>';
+        var infowindow = new google.maps.InfoWindow({
+            content: contentString
+        });
+        if (e.lat !== undefined) {
+            var latLng = new google.maps.LatLng(e.lat, e.lng);
+            var marker = new google.maps.Marker({
+                position: latLng,
+                map: map,
+            })
+            marker.addListener('click', () => infowindow.open(map, marker))
+        }
+    })
+})
