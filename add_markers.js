@@ -65,6 +65,7 @@ $.get("https://data.nashville.gov/resource/xakp-ess3.json", (data) => {
         var infowindow = new google.maps.InfoWindow({
             content: contentString
         });
+    
 
         if (e.mapped_location !== undefined) { 
             var latLng = new google.maps.LatLng(e.mapped_location.coordinates[1], e.mapped_location.coordinates[0])
@@ -72,7 +73,23 @@ $.get("https://data.nashville.gov/resource/xakp-ess3.json", (data) => {
                 position: latLng,
                 map: map,
             })
-            marker.addListener('click', () => infowindow.open(map,marker))
+            var streetViewPanoramaInfoWindow = new google.maps.InfoWindow({
+                content: contentString,
+                position: latLng, // refer to step #2
+                disableAutoPan: true // optional but helpful
+            });
+            marker.addListener('click', function () {
+                var streetViewPanorama = map.getStreetView();
+
+                // when streetview was engaged
+                if (streetViewPanorama.getVisible() == true) {
+                    streetViewPanoramaInfoWindow.open(streetViewPanorama); // refer to step #3
+                }
+                // when normal aerial view was engaged
+                else {
+                    infowindow.open(map, marker); // refer to step #3
+                }
+            });
         }
     }) 
 })
@@ -104,7 +121,23 @@ $.get("https://data.austintexas.gov/resource/x98i-tia5.json", (data) => {
                 position: latLng,
                 map: map,
             })
-            marker.addListener('click', () => infowindow.open(map, marker))
+            var streetViewPanoramaInfoWindow = new google.maps.InfoWindow({
+                content: contentString,
+                position: latLng, // refer to step #2
+                disableAutoPan: true // optional but helpful
+            });
+            marker.addListener('click', function () {
+                var streetViewPanorama = map.getStreetView();
+
+                // when streetview was engaged
+                if (streetViewPanorama.getVisible() == true) {
+                    streetViewPanoramaInfoWindow.open(streetViewPanorama); // refer to step #3
+                }
+                // when normal aerial view was engaged
+                else {
+                    infowindow.open(map, marker); // refer to step #3
+                }
+            });
         }
     })
 });
@@ -138,7 +171,23 @@ $.get("https://data.norfolk.gov/resource/k8ry-iqjg.json", (data) => {
                 position: latLng,
                 map: map,
             })
-            marker.addListener('click', () => infowindow.open(map, marker))
+            var streetViewPanoramaInfoWindow = new google.maps.InfoWindow({
+                content: contentString,
+                position: latLng, // refer to step #2
+                disableAutoPan: true // optional but helpful
+            });
+            marker.addListener('click', function () {
+                var streetViewPanorama = map.getStreetView();
+
+                // when streetview was engaged
+                if (streetViewPanorama.getVisible() == true) {
+                    streetViewPanoramaInfoWindow.open(streetViewPanorama); // refer to step #3
+                }
+                // when normal aerial view was engaged
+                else {
+                    infowindow.open(map, marker); // refer to step #3
+                }
+            });
         }
     })
 });
@@ -173,7 +222,23 @@ $.get("https://data.lacounty.gov/resource/5hc5-td4w.json", (data) => {
                 position: l.results[0].geometry.location,
                 map: map,
             })
-            marker.addListener('click', () => infowindow.open(map, marker))
+            var streetViewPanoramaInfoWindow = new google.maps.InfoWindow({
+                content: contentString,
+                position: l.results[0].geometry.location, // refer to step #2
+                disableAutoPan: true // optional but helpful
+            });
+            marker.addListener('click', function () {
+                var streetViewPanorama = map.getStreetView();
+
+                // when streetview was engaged
+                if (streetViewPanorama.getVisible() == true) {
+                    streetViewPanoramaInfoWindow.open(streetViewPanorama); // refer to step #3
+                }
+                // when normal aerial view was engaged
+                else {
+                    infowindow.open(map, marker); // refer to step #3
+                }
+            });
         })
     })
 })
@@ -202,7 +267,23 @@ $.get("https://www.nycgovparks.org/bigapps/DPR_PublicArt_001.json", (data) => {
                 position: latLng,
                 map: map,
             })
-            marker.addListener('click', () => infowindow.open(map, marker))
+            var streetViewPanoramaInfoWindow = new google.maps.InfoWindow({
+                content: contentString,
+                position: latLng, // refer to step #2
+                disableAutoPan: true // optional but helpful
+            });
+            marker.addListener('click', function () {
+                var streetViewPanorama = map.getStreetView();
+
+                // when streetview was engaged
+                if (streetViewPanorama.getVisible() == true) {
+                    streetViewPanoramaInfoWindow.open(streetViewPanorama); // refer to step #3
+                }
+                // when normal aerial view was engaged
+                else {
+                    infowindow.open(map, marker); // refer to step #3
+                }
+            });
         }
     })
 })
