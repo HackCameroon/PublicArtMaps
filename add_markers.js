@@ -94,6 +94,61 @@ $.get("https://data.nashville.gov/resource/xakp-ess3.json", (data) => {
     }) 
 })
 
+// Chicago
+$.get("https://data.cityofchicago.org/resource/we8h-apcf.json", (data) => {
+    console.log(data)
+
+    data.forEach(e => {
+
+        let title_str = (e.artwork_title === undefined ? "" : ('<h1 id="firstHeading" class="firstHeading">' + e.artwork_title + '</h1>'));
+        let medium_str = (e.media === undefined ? "" : ('<p><b> Media: </b>' + e.media + '</p>'));
+        let artist_credit = (e.artist_credit === undefined ? "" : ('<p><b> Artist: </b>' + e.artist_credit + '</p>'))
+        let desc_str = (e.description_of_artwork === undefined ? "" : ('<p>' + e.description_of_artwork + '</p>' ));
+        let addl = (e.artwork_title === "Rush More" ? ('<p> By the way, this mural was made possible by Kevin, who I know, which is pretty cool. He\'s pretty cool too. </p>' ) : "")
+        var contentString = '<div id="content">' +
+            '<div id="siteNotice">' +
+            '</div>' +
+            title_str +
+            '<div id="bodyContent">' +
+            artist_credit +
+            medium_str +
+            desc_str +
+            addl + 
+            '</div>' +
+            '</div>';
+
+        var infowindow = new google.maps.InfoWindow({
+            content: contentString
+        });
+    
+
+        if (e.location !== undefined) { 
+            var latLng = new google.maps.LatLng(e.location.coordinates[1], e.location.coordinates[0])
+            var marker = new google.maps.Marker({
+                position: latLng,
+                map: map,
+            })
+            var streetViewPanoramaInfoWindow = new google.maps.InfoWindow({
+                content: contentString,
+                position: latLng, // refer to step #2
+                disableAutoPan: true // optional but helpful
+            });
+            marker.addListener('click', function () {
+                var streetViewPanorama = map.getStreetView();
+
+                // when streetview was engaged
+                if (streetViewPanorama.getVisible() == true) {
+                    streetViewPanoramaInfoWindow.open(streetViewPanorama); // refer to step #3
+                }
+                // when normal aerial view was engaged
+                else {
+                    infowindow.open(map, marker); // refer to step #3
+                }
+            });
+        }
+    }) 
+})
+
 // Austin!
 $.get("https://data.austintexas.gov/resource/x98i-tia5.json", (data) => {
     console.log(data)
